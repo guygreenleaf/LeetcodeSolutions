@@ -1,5 +1,5 @@
 //
-// Created by yaweh on 7/24/2021.
+// Created by Guy on 7/24/2021.
 //
 
 #ifndef LEETCODESOLUTIONS_SOLUTIONS_HPP
@@ -16,6 +16,8 @@ public:
     class LRUCache;
 
     std::vector<std::vector<int>> merge(std::vector<std::vector<int>>& intervals);
+
+    int maxProfit(std::vector<int>& prices);
 
 };
 

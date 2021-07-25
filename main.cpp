@@ -41,6 +41,14 @@ int main() {
             cout << i[0] << ", " << i[1] << endl;
     }
 
+
+
+    //BUY/SELL STOCKS
+
+    std::vector<int> stockPrices = {7, 1, 5, 3, 6, 4};
+
+    cout << solns.maxProfit(stockPrices) << endl;
+
     return 0;
 }
 
