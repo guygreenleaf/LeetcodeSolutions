@@ -3,6 +3,7 @@
 //
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 #include "Solutions.hpp"
 
 //Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
@@ -97,4 +98,98 @@ bool Solutions::isRobotBounded(std::string instructions){
     //OR does it NOT face north? (consequence of the plane symmetry for the repeated cycles)
     return (x == 0 && y == 0) || (idx != 0);
 
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+//Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+//
+//Implement the LRUCache class:
+//
+//LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+//int get(int key) Return the value of the key if the key exists, otherwise return -1.
+//void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+//The functions get and put must each run in O(1) average time complexity.
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+
+/*
+class LRUCache {
+
+    int size;
+    list<int> lru;                              // MRU ... LRU
+    unordered_map<int, list<int>::iterator> mp; // key -> iterator
+    unordered_map<int, int> kv;                 // key -> value
+
+
+public:
+    LRUCache(int capacity){
+        size = capacity;
+    }
+
+
+    int get(int key) {
+        if (kv.count(key) == 0) return -1;
+        updateLRU(key);
+        return kv[key];
+    }
+
+    void put(int key, int value) {
+        if (kv.size() == size && kv.count(key) == 0)
+            evict();
+        updateLRU(key);
+        kv[key] = value;
+    }
+
+    void updateLRU(int key) {
+        if (kv.count(key))
+            lru.erase(mp[key]);
+        lru.push_front(key);
+        mp[key] = lru.begin();
+    }
+
+    void evict() {
+        mp.erase(lru.back());
+        kv.erase(lru.back());
+        lru.pop_back();
+    }
+
+};
+*/
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//MERGE INTERVALS
+//Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+//
+//EXAMPLE:
+//Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+//Output: [[1,6],[8,10],[15,18]]
+//Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+
+std::vector<std::vector<int>> Solutions::merge(std::vector<std::vector<int>>& intervals) {
+    //Edge case: If `intervals` only contains one interval.
+    if(intervals.size()<=1) return intervals;
+    //Sort the intervals
+    std::sort(intervals.begin(), intervals.end());
+    //create vector that will be our output
+    std::vector<std::vector<int>> output;
+    //Push the first interval into the output vector
+    output.push_back(intervals[0]);
+    //Loop over `intervals` and:
+    for(int i=1; i<intervals.size(); i++) {
+        //if the last interval in the `output` vector has a 2nd value that's greater than or equal to the 1st value at the i'th interval in `intervals`,
+        if(output.back()[1] >= intervals[i][0]){
+            //Set 2nd value in last interval of output vector to the max between itself and the 2nd value at the i'th interval in intervals
+            output.back()[1] = std::max(output.back()[1] , intervals[i][1]);
+        }
+        //otherwise just push the current interval in `intervals into the `output` vector
+        else output.push_back(intervals[i]);
+    }
+    return output;
 }

@@ -24,9 +24,22 @@ int main() {
 
     //ROBOT CIRCLE
     string instrs = "GGLLGG";
-
     cout << solns.isRobotBounded(instrs) << std::endl;
 
+
+    //////////////////////////////////////////////////
+
+    //MERGE INTERVALS
+    vector<int> interval1 = {1, 3};
+    vector<int> interval2 = {2, 6};
+    vector<int> interval3 = {8, 10};
+    vector<int> interval4 = {15, 18};
+    vector<vector<int>> intervals = {interval1, interval2, interval3, interval4};
+
+    vector<vector<int>> mergedInterval = solns.merge(intervals);
+    for(auto & i : mergedInterval){
+            cout << i[0] << ", " << i[1] << endl;
+    }
 
     return 0;
 }
